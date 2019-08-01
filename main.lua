@@ -1,11 +1,11 @@
--- (Not so) Feebile attempt to make a fuel percentage widget.
+-- Power panel widget for the Heli Masses!
 --[[ To do:
-      get playValue working
       get display to conform to widget size
       maybe add some more info or graphics or bitmaps to make it look better
       ]]
       
   -- Many thanks to DanielGA on Helifreak, who is immensely helpful!
+	-- Also thanks to all those other open sourcers who I egregiously pilfered code from so I could modify it to fit my needs.
 
 local options = {
   { "Sensor", SOURCE }, -- get a sensor
@@ -48,22 +48,24 @@ local function getPercentColor(cpercent)
     return lcd.RGB(0,0xff,0)
   end
 end
+
 -- Play percent remaining voice calls
--- plays percent at intervals of 10 above 10% and each 5% at intervals below 10%
+		-- plays percent at intervals of 10 above 10% and each 5% at intervals below 10%
 local function bitchAboutIt()
 	local pct
--- set up interval
+	-- set up interval
 	if capRem < 10 then
 		pct = capRem % 5
 	else
 		pct = capRem % 10
 	end
--- bitch about it.
+	-- bitch about it.
 	if pct == 0 and capRem ~= trip and capRem > 0 and capRem < 100 then
 		playNumber(capRem, 13)
 			trip = capRem	-- don't keep bitching about it.
   end
 end
+
 ---------------------------------------------------------------------------
 --             this section contains zone draw functions                 --
 ---------------------------------------------------------------------------
@@ -115,7 +117,7 @@ local function background(myZone)
     bitchAboutIt()
   end
 end
--- Draw the values and stuff while the screen is visible.
+-- Draw stuff while the screen is visible.
 function refresh(myZone)
   if getRSSI() > 0 then -- play percent if telemetry is linked up
     bitchAboutIt()
