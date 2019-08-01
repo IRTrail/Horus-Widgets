@@ -16,6 +16,7 @@ local trip = false
 -- Do some zone stuff. 
 local function create(zone, options)
   local myZone = { zone=zone, options=options }
+-- can these be added to the myZone table and simplify the return call?
   local capRem = 0
   local capUsed = Sensor
   local capTotal = BattSize
@@ -108,9 +109,11 @@ end
 local function zoneXLarge(zone)
   lcd.drawText(zone.zone.x+56, zone.zone.y+56, "Please use Large size widget.", CUSTOM_COLOR + BLINK + INVERS)
 end
--- hope to impliment playValue here as well as refresh() to call percents when widget isn't visible
+-- Voice calls even when the widget isn't visibile.
 local function background(myZone)
-  local capRem  = calc(capUsed, capTotal)
+  if getRSSI() > 0 then -- play percent if telemetry is linked up
+    bitchAboutIt()
+  end
 end
 -- Draw the values and stuff while the screen is visible.
 function refresh(myZone)
