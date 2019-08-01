@@ -71,14 +71,8 @@ local function zoneTiny(zone)
   local capUsed = getValue(zone.options.Sensor)
   local capTotal = zone.options.BattSize * 100
   local capRem  = calc(capUsed, capTotal)
-    
-  --lcd.drawText(zone.zone.x+0, zone.zone.y+0, "Battery", CUSTOM_COLOR)
-  --lcd.drawText(zone.zone.x+0, zone.zone.y+0, "Remaining:", CUSTOM_COLOR)
-  --lcd.drawText(zone.zone.x+0, zone.zone.y+0, capRem .. "%", CUSTOM_COLOR + SMLSIZE) --report percent
-  --lcd.drawText(zone.zone.x+2, zone.zone.y+40, "Capacity Used:" , CUSTOM_COLOR)
+ 
   lcd.drawText(zone.zone.x+2, zone.zone.y+0, capUsed .. " mAh", TEXT_INVERTED_COLOR + SMLSIZE) --report capacity used
-  --lcd.drawText(zone.zone.x+2, zone.zone.y+80, "Useable Battery:", CUSTOM_COLOR)
-  --lcd.drawText(zone.zone.x+2, zone.zone.y+96, capTotal .. " mAh", CUSTOM_COLOR) -- report usable size set in options
   lcd.setColor(CUSTOM_COLOR, getPercentColor(capRem))
   lcd.drawGauge(zone.zone.x+0, zone.zone.y+23, 65, 12, capRem, 100, CUSTOM_COLOR)
   lcd.drawText(zone.zone.x+15, zone.zone.y+20, capRem.."%", TEXT_INVERTED_COLOR + SHADOWED + SMLSIZE)
