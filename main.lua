@@ -62,7 +62,7 @@ local function bitchAboutIt()
 	-- bitch about it.
 	if pct == 0 and capRem ~= trip and capRem > 0 and capRem < 100 then
 		playNumber(capRem, 13)
-			trip = capRem	-- don't keep bitching about it.
+		trip = capRem	-- don't keep bitching about it.
   end
 end
 
