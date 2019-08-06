@@ -14,11 +14,12 @@ local options = {
 }
 -- Do some zone stuff. 
 local function create(zone, options)
-  local myZone = { zone=zone, options=options}
-  local capRem = 0
-  local capUsed = Sensor
-  local capTotal = BattSize
-  
+  local widgetOptions = {}
+  local myZone = { zone=zone, options=options, widgetOptions = widgetOptions}
+  -- local capRem = 0 --does nothing here, see next comment
+  widgetOptions.trip = 0	
+  -- local capUsed = Sensor --capUsed will only be know to this function!! Sensor is not known here!!
+  -- local capTotal = BattSize  --idem
   return myZone
 end
 -- update options if necessary
@@ -33,8 +34,8 @@ end
 --Function to calculate remaining percentage.
     --Funky math is to allow BattSize reported in actual mAh
 local function calc(sensor, total)
-  capRem = math.floor( 100 -( sensor * 100 / total )) -- remaining capacity normalized to pectentage
-return capRem
+  return  math.floor( 100 -( sensor * 100 / total )) -- remaining capacity normalized to pectentage
+--return capRem
 end
 
 -- This function returns green red below 10%, yellow in between, and green above 25%
@@ -49,7 +50,7 @@ local function getPercentColor(cpercent)
 end
 -- Play percent remaining voice calls
     -- plays percent at intervals of 10 above 10% and each 5% at intervals below 10%
-local function bitchAboutIt()
+local function bitchAboutIt(capRem,trip)
 	local pct
 -- set up interval
 	if capRem < 10 then
@@ -58,10 +59,11 @@ local function bitchAboutIt()
 		pct = capRem % 10
 	end
 -- bitch about it.
-	if pct == 0 and capRem ~= trip and capRem > 0 and capRem < 100 then
+	if pct == 0 and capRem ~= trip and capRem > 0 and capRem < 100 then  --global trip, very bad!!
 		playNumber(capRem, 13)
 			trip = capRem	-- don't keep bitching about it.
-  end
+        end
+	return trip
 end
 ---------------------------------------------------------------------------
 --             this section contains zone draw functions                 --
@@ -143,16 +145,19 @@ end
 -- hope to impliment playValue here as well as refresh() to call percents when widget isn't visible
 -- not working right now for some reason...?
 local function background(myZone)
+  local capUsed = getValue(zone.options.Sensor)
+  local capTotal = zone.options.BattSize * 100
+  local capRem  = calc(capUsed, capTotal)
   if getRSSI() > 0 then -- play percent if telemetry is linked up
-    bitchAboutIt()
+    myZone.widgetOptions.trip = bitchAboutIt(capRem,myZone.widgetOptions.trip)
   end
 end
 -- Draw the values and stuff while the screen is visible.
 function refresh(myZone)
-  
-  if getRSSI() > 0 then -- play percent if telemetry is linked up
-    bitchAboutIt()
-  end
+  background(myZOne) --isn't called from radio when widget is visible!!! do it yourself
+--  if getRSSI() > 0 then -- play percent if telemetry is linked up
+--    bitchAboutIt()
+--  end
   
   if        myZone.zone.w  > 380 and myZone.zone.h > 165 then zoneXLarge(myZone)
     elseif  myZone.zone.w  > 180 and myZone.zone.h > 145  then zoneLarge(myZone)
