@@ -5,6 +5,8 @@
       ]]
       
   -- Many thanks to DanielGA on Helifreak, who is immensely helpful!
+	-- Thanks to IShems and everyone else at RCGroups who answered my questions.
+	-- Thanks to all the other coders before me who's code I studied, egregiously pilfered, and changed to make this work.
 
 local options = {
   { "Sensor", SOURCE }, -- get a sensor
@@ -71,7 +73,7 @@ local function zoneTiny(zone)
   local capRem  = calc(capUsed, capTotal)
   
   lcd.drawText(zone.zone.x+0, zone.zone.y+0, capUsed .. "mAh", TEXT_INVERTED_COLOR + SMLSIZE)
-  --lcd.drawText(zone.zone.x+0, zone.zone.y+12, capTotal .. "mAh", TEXT_INVERTED_COLOR + SMLSIZE)--report capacity 
+  --lcd.drawText(zone.zone.x+0, zone.zone.y+12, capTotal .. "mAh", TEXT_INVERTED_COLOR + SMLSIZE)
   lcd.setColor(CUSTOM_COLOR, getPercentColor(capRem))
   lcd.drawGauge(zone.zone.x+0, zone.zone.y+28, 68, 12, capRem, 100, CUSTOM_COLOR)
   lcd.drawText(zone.zone.x+20, zone.zone.y+25, capRem.."%", TEXT_INVERTED_COLOR + SHADOWED + SMLSIZE)
@@ -139,6 +141,7 @@ local function zoneXLarge(zone)
   lcd.drawText(zone.zone.x+75, zone.zone.y+150, capRem.."%", TEXT_INVERTED_COLOR + SHADOWED)
 end
 -- hope to impliment playValue here as well as refresh() to call percents when widget isn't visible
+-- not working right now for some reason...?
 local function background(myZone)
   if getRSSI() > 0 then -- play percent if telemetry is linked up
     bitchAboutIt()
