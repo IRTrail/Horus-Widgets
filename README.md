@@ -12,8 +12,7 @@ Options are Sensor and BattSize
   
 Voice calls are at 10% intervals above 10% remaining and then 5% intervals below.
 
-Only the large size is working currently.
-I am trying to get other sizes configured.
+All widget sizes are working except XL. It isn't finished yet.
 
 Lastly, let me know if there are things you think might work better.
   I ignore most anything that isn't accompanied by a pint of Guiness...just saying! ;)
