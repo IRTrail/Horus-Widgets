@@ -14,5 +14,7 @@ Voice calls are at 10% intervals above 10% remaining and then 5% intervals below
 
 All widget sizes are working except XL. It isn't finished yet.
 
+Right now, if you have multiple instances of the widget running, it will do a voice call for each one. So, if you have the top bar widget, a small on one screen,and a large on another, it will call "90% 90% 90%" instead of "90%". I am working on that.
+
 Lastly, let me know if there are things you think might work better.
   I ignore most anything that isn't accompanied by a pint of Guiness...just saying! ;)
