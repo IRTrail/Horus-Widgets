@@ -1,6 +1,6 @@
 # Power Panel
 Select widget in the normal way.
-Options are Sensor and BattSize
+Options are Sensor, BattSize and Color
   You can choose any sensor or input.
   The widget will divide that by the total (BattSize) and report the remaining percentage.
   I.E: 1 - used/total
@@ -9,6 +9,10 @@ Options are Sensor and BattSize
   BattSize is the total.
   it must be multiplied by 100 (35 = 3500mAh)
   Sorry. I know it's wonky. I can set the default to 3500, but scrolling to set a different value is limited to 0 - 100 by OpenTX.
+  
+  Color is the text color. Use the RGB fields to set the color of the widget.
+  I changed the gauge to be user color until it hits 10% when it turns yellow, then red at 5%.
+  So, if you use pure red or pure yellow for text, it will switch or not switch based on your base color selection.
   
 Voice calls are at 10% intervals above 10% remaining and then 5% intervals below.
 
